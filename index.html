@@ -1,0 +1,908 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f8fafc">
+<meta name="description" content="Aman — Accounts Executive skilled in Tally, Excel, billing, inventory records and accounting operations.">
+<title>Aman — Accounts & Operations Portfolio</title>
+
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f8fafc;
+  --surface: rgba(255,255,255,.88);
+  --text: #172033;
+  --muted: #687386;
+  --border: rgba(100,116,139,.17);
+  --accent: #2563eb;
+  --soft: #eaf1ff;
+  --shadow: 0 16px 48px rgba(30,50,90,.07);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+body.dark {
+  color-scheme: dark;
+  --bg: #0b1020;
+  --surface: rgba(19,27,45,.91);
+  --text: #edf3ff;
+  --muted: #a3afc5;
+  --border: rgba(148,163,184,.18);
+  --accent: #83aaff;
+  --soft: #172747;
+  --shadow: 0 16px 48px rgba(0,0,0,.2);
+}
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, a:focus-visible, input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+#particleCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.site {
+  position: relative;
+  z-index: 1;
+}
+.container { width: min(1080px, 91%); margin: auto; }
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.nav-inner {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.brand { font-weight: 800; letter-spacing: -.6px; font-size: 20px; }
+.brand span { color: var(--accent); }
+.nav-links { display: flex; gap: 22px; align-items: center; }
+.nav-links a { font-size: 13px; color: var(--muted); }
+.nav-links a:hover { color: var(--accent); }
+.nav-actions { display: flex; gap: 8px; align-items: center; }
+.icon-btn, .menu-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 12px;
+}
+.menu-btn { display: none; }
+.hero {
+  min-height: 590px;
+  padding: 112px 0 85px;
+  display: grid;
+  grid-template-columns: 1.35fr .65fr;
+  gap: 50px;
+  align-items: center;
+}
+.eyebrow {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--accent);
+  background: var(--soft);
+  border: 1px solid var(--border);
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #22c55e;
+}
+h1 {
+  font-size: clamp(43px, 7vw, 78px);
+  line-height: 1.03;
+  letter-spacing: -4px;
+  margin: 24px 0 20px;
+}
+.gradient-text {
+  background: linear-gradient(105deg,#2563eb,#7c3aed,#0891b2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lead { color: var(--muted); max-width: 590px; font-size: 17px; }
+.hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 14px;
+  background: var(--surface);
+  color: var(--text);
+  transition: transform .18s ease, border-color .18s ease;
+}
+.btn:hover { transform: translateY(-2px); border-color: var(--accent); }
+.btn.primary { background: #2563eb; color: white; border-color: #2563eb; }
+.profile-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: 28px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.profile-card:before {
+  content: "";
+  position: absolute;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle,rgba(59,130,246,.16),transparent 70%);
+  right: -40px; top: -50px;
+  pointer-events: none;
+}
+.avatar {
+  width: 78px; height: 78px;
+  display: grid; place-items: center;
+  border-radius: 24px;
+  font-size: 29px; font-weight: 800; color: #fff;
+  background: linear-gradient(135deg,#2563eb,#8b5cf6);
+  margin-bottom: 20px;
+}
+.profile-card h2 { font-size: 23px; margin: 0; letter-spacing: -.5px; }
+.profile-card p { color: var(--muted); font-size: 14px; margin: 6px 0 18px; }
+.quick-info {
+  display: grid;
+  gap: 11px;
+  padding-top: 17px;
+  border-top: 1px solid var(--border);
+}
+.quick-info div { display: flex; gap: 10px; font-size: 13px; overflow-wrap: anywhere; }
+.quick-info strong { min-width: 75px; }
+section { padding: 72px 0; }
+.section-head { margin-bottom: 28px; }
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 800;
+}
+h2.section-title {
+  font-size: clamp(30px,4vw,43px);
+  letter-spacing: -1.8px;
+  line-height: 1.15;
+  margin: 8px 0 10px;
+}
+.section-desc { color: var(--muted); max-width: 650px; margin: 0; }
+.grid { display: grid; gap: 18px; }
+.two-col { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.three-col { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: 22px;
+  padding: 24px;
+  min-width: 0;
+}
+.card h3 { margin: 0 0 8px; font-size: 19px; letter-spacing: -.4px; }
+.card p { margin: 7px 0; color: var(--muted); font-size: 14px; }
+.card .date { font-size: 12px; color: var(--accent); font-weight: 700; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.tag {
+  border: 1px solid var(--border);
+  background: var(--soft);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+.skill-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.filter-btn {
+  padding: 8px 13px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 999px;
+  font-size: 12px;
+}
+.filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.skill-card { transition: border-color .2s; }
+.skill-card:hover { border-color: var(--accent); }
+.skill-icon { font-size: 25px; margin-bottom: 12px; }
+.skill-card[hidden] { display: none; }
+.timeline { display: grid; gap: 18px; }
+.job-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+.job-head .date { align-self: center; }
+ul.clean { padding-left: 20px; color: var(--muted); font-size: 14px; }
+ul.clean li { margin: 7px 0; }
+.metric { font-size: 29px; font-weight: 800; letter-spacing: -1px; }
+.metric-label { color: var(--muted); font-size: 13px; }
+.tool-card label { display: block; font-size: 13px; margin: 12px 0 5px; color: var(--muted); }
+.tool-card input, .tool-card select {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 12px;
+  color: var(--text);
+  background: var(--bg);
+}
+.tool-card .btn { margin-top: 15px; }
+.result {
+  margin-top: 15px;
+  padding: 13px;
+  border-radius: 13px;
+  background: var(--soft);
+  overflow-wrap: anywhere;
+}
+.result strong { font-size: 20px; }
+.contact-card { text-align: center; padding: 42px 25px; }
+.contact-card .section-desc { margin: auto; }
+.contact-links {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center; margin-top: 24px;
+}
+footer { border-top: 1px solid var(--border); padding: 25px 0; color: var(--muted); font-size: 12px; }
+.footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.small-note { color: var(--muted); font-size: 12px; margin-top: 14px; }
+@media (max-width: 800px) {
+  .hero { grid-template-columns: 1fr; padding: 80px 0 55px; gap: 30px; }
+  .profile-card { max-width: 520px; }
+  .three-col { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex; position: absolute; top: 68px; left: 0; right: 0;
+    padding: 20px 5%; background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column; align-items: flex-start;
+  }
+  .menu-btn { display: inline-block; }
+}
+@media (max-width: 560px) {
+  h1 { letter-spacing: -2.5px; }
+  section { padding: 53px 0; }
+  .two-col, .three-col { grid-template-columns: 1fr; }
+  .card { padding: 20px; }
+  .hero { min-height: auto; }
+  .lead { font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<canvas id="particleCanvas" aria-hidden="true"></canvas>
+
+<div class="site">
+<nav>
+  <div class="container nav-inner">
+    <a class="brand" href="#home" aria-label="Aman home">aman<span>.</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#tools">Tools</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch color theme">☾</button>
+      <button class="menu-btn" id="menuToggle" type="button" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<div class="container">
+  <header class="hero" id="home">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> Open to career opportunities</span>
+      <h1>Hi, I'm Aman.<br><span class="gradient-text">Accounts & Operations.</span></h1>
+      <p class="lead">
+        I work with accounting records, Tally, Excel, billing documentation
+        and inventory data to help keep everyday business operations organized
+        and accurate.
+      </p>
+      <div class="hero-buttons">
+        <a class="btn primary" href="#experience">Explore my work ↗</a>
+        <a class="btn" href="#contact">Get in touch</a>
+        <a class="btn" href="https://www.linkedin.com/in/mr-aman-/"
+           target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+      </div>
+    </div>
+
+    <aside class="profile-card">
+      <div class="avatar" aria-hidden="true">A.</div>
+      <h2>Aman</h2>
+      <p>Accounts Executive · Tally · MS Excel</p>
+      <div class="quick-info">
+        <div><strong>Location</strong><span>Rudrapur, Uttarakhand</span></div>
+        <div><strong>Focus</strong><span>Accounts & MIS</span></div>
+        <div><strong>Education</strong><span>B.Com — Final Year</span></div>
+        <div><strong>Experience</strong><span>Accounts and office operations</span></div>
+      </div>
+    </aside>
+  </header>
+
+  <section id="about">
+    <div class="section-head">
+      <span class="kicker">A little about me</span>
+      <h2 class="section-title">Organized work.<br>Reliable records.</h2>
+      <p class="section-desc">
+        I handle day-to-day accounting support and documentation. My focus is
+        keeping bills, vouchers, inventory records and Excel files structured,
+        accessible and up to date.
+      </p>
+    </div>
+    <div class="grid three-col">
+      <article class="card">
+        <div class="metric">01</div>
+        <h3>Accounting</h3>
+        <p>Voucher entries, purchase bills, ledger records and payment preparation.</p>
+      </article>
+      <article class="card">
+        <div class="metric">02</div>
+        <h3>Documentation</h3>
+        <p>Bill verification, challans, e-way bill documentation and organized filing.</p>
+      </article>
+      <article class="card">
+        <div class="metric">03</div>
+        <h3>Excel & Records</h3>
+        <p>Digital files, inventory tracking, data entry and report preparation.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head">
+      <span class="kicker">Career journey</span>
+      <h2 class="section-title">Experience</h2>
+      <p class="section-desc">Practical experience in accounts, data handling and office administration.</p>
+    </div>
+    <div class="timeline">
+      <article class="card">
+        <div class="job-head">
+          <div>
+            <h3>Accounts Executive</h3>
+            <p><strong>Dolfin</strong></p>
+          </div>
+          <span class="date">Jan 2026 – Present</span>
+        </div>
+        <ul class="clean">
+          <li>Enter cash vouchers and maintain accounting records in Tally.</li>
+          <li>Book and verify purchase bills, invoices and supporting documents.</li>
+          <li>Prepare job-work challans, delivery challans and e-way bill documentation.</li>
+          <li>Maintain monthly inventory inward/outward records and Excel files.</li>
+          <li>Organize physical and digital records and assist with payment preparation.</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Tally</span><span class="tag">MS Excel</span>
+          <span class="tag">Purchase Bills</span><span class="tag">Inventory</span>
+          <span class="tag">Challans</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="job-head">
+          <div>
+            <h3>Technical & Administrative Assistant</h3>
+            <p><strong>S.K. Institute of Technology & Management</strong></p>
+          </div>
+          <span class="date">Feb 2025</span>
+        </div>
+        <ul class="clean">
+          <li>Supported student database management and data entry.</li>
+          <li>Prepared office documentation and maintained Excel/MS Office files.</li>
+          <li>Organized physical records and routine administrative paperwork.</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Data Entry</span><span class="tag">MS Office</span>
+          <span class="tag">Documentation</span><span class="tag">Filing</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head">
+      <span class="kicker">What I work with</span>
+      <h2 class="section-title">Skills & tools</h2>
+      <p class="section-desc">Filter the skills to explore different areas of my work.</p>
+    </div>
+
+    <div class="skill-controls" aria-label="Filter skills">
+      <button class="filter-btn active" data-filter="all" type="button">All skills</button>
+      <button class="filter-btn" data-filter="accounts" type="button">Accounting</button>
+      <button class="filter-btn" data-filter="office" type="button">Office & Excel</button>
+      <button class="filter-btn" data-filter="records" type="button">Records & Compliance</button>
+    </div>
+
+    <div class="grid three-col" id="skillGrid">
+      <article class="card skill-card" data-category="accounts">
+        <div class="skill-icon">▤</div><h3>Tally</h3>
+        <p>Voucher entries, purchase booking and accounting records.</p>
+      </article>
+      <article class="card skill-card" data-category="office">
+        <div class="skill-icon">▦</div><h3>MS Excel</h3>
+        <p>Digital files, data organization, inventory sheets and reports.</p>
+      </article>
+      <article class="card skill-card" data-category="accounts">
+        <div class="skill-icon">₹</div><h3>Bill Verification</h3>
+        <p>Purchase bills, invoice checking and supporting documentation.</p>
+      </article>
+      <article class="card skill-card" data-category="accounts">
+        <div class="skill-icon">↔</div><h3>Payments & Ledgers</h3>
+        <p>Payment preparation and maintaining transaction records.</p>
+      </article>
+      <article class="card skill-card" data-category="records">
+        <div class="skill-icon">▣</div><h3>Challans & E-way Bills</h3>
+        <p>Job-work and delivery challan documentation support.</p>
+      </article>
+      <article class="card skill-card" data-category="records">
+        <div class="skill-icon">▥</div><h3>Inventory Records</h3>
+        <p>Monthly inward/outward data and stock documentation.</p>
+      </article>
+      <article class="card skill-card" data-category="office">
+        <div class="skill-icon">⌘</div><h3>MS Office</h3>
+        <p>Office documents, spreadsheets and administrative files.</p>
+      </article>
+      <article class="card skill-card" data-category="records">
+        <div class="skill-icon">▤</div><h3>Record Management</h3>
+        <p>Digital filing, physical files and document organization.</p>
+      </article>
+      <article class="card skill-card" data-category="office">
+        <div class="skill-icon">⌨</div><h3>Data Entry</h3>
+        <p>Accurate entry and maintenance of structured records.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-head">
+      <span class="kicker">Education & learning</span>
+      <h2 class="section-title">Building my foundation.</h2>
+    </div>
+    <div class="grid two-col">
+      <article class="card">
+        <h3>Bachelor of Commerce (B.Com)</h3>
+        <p>MJPRU, Bareilly</p>
+        <p>2024 – 2026 · Final year as listed in my profile</p>
+      </article>
+      <article class="card">
+        <h3>Certifications & Courses</h3>
+        <div class="tags">
+          <span class="tag">ADCA</span>
+          <span class="tag">Tally Accounting</span>
+          <span class="tag">Advanced MS Excel</span>
+          <span class="tag">Data Analytics Internship</span>
+          <span class="tag">CodeWithHarry — Data Science</span>
+        </div>
+        <p class="small-note">Course and certification details can be expanded with issuing organizations and completion dates.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="tools">
+    <div class="section-head">
+      <span class="kicker">Interactive utilities</span>
+      <h2 class="section-title">Small tools, useful calculations.</h2>
+      <p class="section-desc">Simple illustrative calculators. Verify figures and applicable tax rules before using them in actual accounts.</p>
+    </div>
+    <div class="grid two-col">
+      <article class="card tool-card">
+        <h3>GST Calculator</h3>
+        <p>Calculate GST on a taxable amount.</p>
+        <label for="gstAmount">Taxable amount (₹)</label>
+        <input id="gstAmount" type="number" min="0" step="0.01" value="1000">
+        <label for="gstRate">GST rate</label>
+        <select id="gstRate">
+          <option value="0">0%</option>
+          <option value="5">5%</option>
+          <option value="12">12%</option>
+          <option value="18" selected>18%</option>
+          <option value="28">28%</option>
+        </select>
+        <label for="gstType">Calculation type</label>
+        <select id="gstType">
+          <option value="intra">Within state (CGST + SGST)</option>
+          <option value="inter">Inter-state (IGST)</option>
+        </select>
+        <button class="btn primary" id="gstCalculate" type="button">Calculate GST</button>
+        <div class="result" id="gstResult" aria-live="polite">
+          <span>Total amount</span><br><strong>₹1,180.00</strong>
+        </div>
+      </article>
+
+      <article class="card tool-card">
+        <h3>Stock Value Calculator</h3>
+        <p>Estimate stock value using quantity and unit cost.</p>
+        <label for="stockQty">Quantity</label>
+        <input id="stockQty" type="number" min="0" step="any" value="25">
+        <label for="stockCost">Cost per unit (₹)</label>
+        <input id="stockCost" type="number" min="0" step="0.01" value="150">
+        <button class="btn primary" id="stockCalculate" type="button">Calculate stock value</button>
+        <div class="result" id="stockResult" aria-live="polite">
+          <span>Estimated stock value</span><br><strong>₹3,750.00</strong>
+        </div>
+        <p class="small-note">This is a basic estimate, not an accounting valuation method.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="card contact-card">
+      <span class="kicker">Let's connect</span>
+      <h2 class="section-title">Have an opportunity?</h2>
+      <p class="section-desc">
+        I'm interested in suitable opportunities in accounts, billing,
+        back-office operations and MIS support.
+      </p>
+      <div class="contact-links">
+        <a class="btn primary" href="mailto:contact.amanx@gmail.com">Email me ↗</a>
+        <a class="btn" href="https://www.linkedin.com/in/mr-aman/"
+           target="_blank" rel="noopener noreferrer">Connect on LinkedIn ↗</a>
+        <button class="btn" id="copyEmail" type="button">Copy email</button>
+      </div>
+      <p class="small-note" id="copyStatus" aria-live="polite"></p>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© <span id="year"></span> Aman. Built with care.</span>
+    <span>Accounts · Excel · Operations</span>
+  </div>
+</footer>
+</div>
+
+<script>
+/* =========================================================
+   FLOATING PARTICLE BACKGROUND
+   Lightweight Canvas; no external libraries.
+   ========================================================= */
+(() => {
+  const canvas = document.getElementById("particleCanvas");
+  const ctx = canvas.getContext("2d", { alpha: true });
+  if (!ctx) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const smallScreen = window.matchMedia("(max-width: 600px)");
+  const particles = [];
+  const colors = [
+    [59, 130, 246],  // blue
+    [139, 92, 246],  // violet
+    [6, 182, 212],   // cyan
+    [236, 72, 153],  // pink
+    [16, 185, 129]   // mint
+  ];
+
+  let width = 0;
+  let height = 0;
+  let dpr = 1;
+  let raf = 0;
+  let lastFrame = 0;
+  let isVisible = true;
+  let pointer = { x: -1000, y: -1000, active: false };
+  let count = 0;
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    count = reduceMotion.matches ? 0 : (smallScreen.matches ? 24 : 54);
+    while (particles.length > count) particles.pop();
+
+    while (particles.length < count) {
+      particles.push(makeParticle(true));
+    }
+
+    if (reduceMotion.matches) {
+      cancelAnimationFrame(raf);
+      raf = 0;
+      drawStatic();
+    } else {
+      start();
+    }
+  }
+
+  function makeParticle(randomY = false) {
+    return {
+      x: Math.random() * Math.max(width, 1),
+      y: randomY ? Math.random() * Math.max(height, 1) : -10,
+      radius: 1.2 + Math.random() * 2.3,
+      vx: (Math.random() - 0.5) * 0.30,
+      vy: 0.12 + Math.random() * 0.30,
+      phase: Math.random() * Math.PI * 2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: 0.22 + Math.random() * 0.34
+    };
+  }
+
+  function drawParticle(p) {
+    const [r, g, b] = p.color;
+    ctx.beginPath();
+    ctx.fillStyle = `rgba(${r},${g},${b},${p.alpha})`;
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawConnections() {
+    const maxDistance = smallScreen.matches ? 75 : 110;
+    const maxDistSq = maxDistance * maxDistance;
+
+    for (let i = 0; i < particles.length; i++) {
+      const a = particles[i];
+      for (let j = i + 1; j < particles.length; j++) {
+        const b = particles[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const distSq = dx * dx + dy * dy;
+
+        if (distSq < maxDistSq) {
+          const distance = Math.sqrt(distSq);
+          const opacity = (1 - distance / maxDistance) * 0.10;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(100,135,200,${opacity})`;
+          ctx.lineWidth = 0.7;
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function drawStatic() {
+    ctx.clearRect(0, 0, width, height);
+    particles.forEach(drawParticle);
+  }
+
+  function frame(timestamp) {
+    raf = 0;
+    if (!isVisible || reduceMotion.matches) return;
+
+    // Cap animation to about 30 FPS to reduce background CPU usage.
+    if (timestamp - lastFrame < 32) {
+      raf = requestAnimationFrame(frame);
+      return;
+    }
+    lastFrame = timestamp;
+
+    ctx.clearRect(0, 0, width, height);
+
+    for (const p of particles) {
+      p.phase += 0.006;
+      p.x += p.vx + Math.sin(p.phase) * 0.10;
+      p.y += p.vy;
+
+      if (pointer.active) {
+        const dx = p.x - pointer.x;
+        const dy = p.y - pointer.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance > 0 && distance < 115) {
+          const force = (115 - distance) / 115 * 0.20;
+          p.x += (dx / distance) * force;
+          p.y += (dy / distance) * force;
+        }
+      }
+
+      if (p.x < -15) p.x = width + 15;
+      if (p.x > width + 15) p.x = -15;
+      if (p.y > height + 15) {
+        p.y = -15;
+        p.x = Math.random() * width;
+      }
+
+      drawParticle(p);
+    }
+
+    drawConnections();
+    raf = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    if (reduceMotion.matches || !isVisible || raf) return;
+    lastFrame = 0;
+    raf = requestAnimationFrame(frame);
+  }
+
+  function stop() {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+  }
+
+  window.addEventListener("pointermove", (event) => {
+    // Touch devices don't need cursor attraction.
+    if (event.pointerType === "touch") return;
+    pointer.x = event.clientX;
+    pointer.y = event.clientY;
+    pointer.active = true;
+  }, { passive: true });
+
+  window.addEventListener("pointerleave", () => {
+    pointer.active = false;
+  }, { passive: true });
+
+  document.addEventListener("visibilitychange", () => {
+    isVisible = !document.hidden;
+    if (isVisible) start();
+    else stop();
+  });
+
+  window.addEventListener("resize", resize, { passive: true });
+
+  if (reduceMotion.addEventListener) {
+    reduceMotion.addEventListener("change", resize);
+  } else {
+    reduceMotion.addListener(resize);
+  }
+
+  resize();
+})();
+
+/* =========================================================
+   THEME SWITCHER
+   ========================================================= */
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("click", () => {
+  const isDark = document.body.classList.toggle("dark");
+  themeToggle.textContent = isDark ? "☀" : "☾";
+  themeToggle.setAttribute("aria-label",
+    isDark ? "Switch to light theme" : "Switch to dark theme");
+});
+
+/* =========================================================
+   MOBILE NAVIGATION
+   ========================================================= */
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  const isOpen = navLinks.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+  });
+});
+
+/* =========================================================
+   SKILL FILTERS
+   ========================================================= */
+const filterButtons = document.querySelectorAll(".filter-btn");
+const skillCards = document.querySelectorAll(".skill-card");
+
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    filterButtons.forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+
+    const filter = button.dataset.filter;
+    skillCards.forEach(card => {
+      card.hidden = filter !== "all" && card.dataset.category !== filter;
+    });
+  });
+});
+
+/* =========================================================
+   GST CALCULATOR
+   ========================================================= */
+const money = amount => new Intl.NumberFormat("en-IN", {
+  style: "currency", currency: "INR"
+}).format(amount);
+
+document.getElementById("gstCalculate").addEventListener("click", () => {
+  const amount = Number(document.getElementById("gstAmount").value);
+  const rate = Number(document.getElementById("gstRate").value);
+  const type = document.getElementById("gstType").value;
+  const result = document.getElementById("gstResult");
+
+  if (!Number.isFinite(amount) || amount < 0) {
+    result.textContent = "Please enter a valid non-negative amount.";
+    return;
+  }
+
+  const gst = amount * rate / 100;
+  const total = amount + gst;
+  let breakdown = "";
+
+  if (type === "intra") {
+    breakdown = `CGST: ${money(gst / 2)} · SGST: ${money(gst / 2)}`;
+  } else {
+    breakdown = `IGST: ${money(gst)}`;
+  }
+
+  result.innerHTML = "";
+  const label = document.createElement("span");
+  label.textContent = "Total amount including GST";
+  const totalLine = document.createElement("strong");
+  totalLine.textContent = money(total);
+  const details = document.createElement("p");
+  details.textContent = `Taxable: ${money(amount)} · GST: ${money(gst)}`;
+  const taxSplit = document.createElement("p");
+  taxSplit.textContent = breakdown;
+  result.append(label, document.createElement("br"), totalLine, details, taxSplit);
+});
+
+/* =========================================================
+   STOCK VALUE CALCULATOR
+   ========================================================= */
+document.getElementById("stockCalculate").addEventListener("click", () => {
+  const qty = Number(document.getElementById("stockQty").value);
+  const cost = Number(document.getElementById("stockCost").value);
+  const result = document.getElementById("stockResult");
+
+  if (!Number.isFinite(qty) || !Number.isFinite(cost) || qty < 0 || cost < 0) {
+    result.textContent = "Please enter valid non-negative values.";
+    return;
+  }
+
+  result.innerHTML = "";
+  const label = document.createElement("span");
+  label.textContent = "Estimated stock value";
+  const total = document.createElement("strong");
+  total.textContent = money(qty * cost);
+  const details = document.createElement("p");
+  details.textContent = `${qty} units × ${money(cost)} per unit`;
+  result.append(label, document.createElement("br"), total, details);
+});
+
+/* =========================================================
+   COPY EMAIL
+   ========================================================= */
+document.getElementById("copyEmail").addEventListener("click", async () => {
+  const status = document.getElementById("copyStatus");
+  try {
+    await navigator.clipboard.writeText("contact.amanx@gmail.com");
+    status.textContent = "Email copied to clipboard.";
+  } catch {
+    status.textContent = "Please copy manually: contact.amanx@gmail.com";
+  }
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
